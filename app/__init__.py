@@ -1,6 +1,6 @@
 import os
 import logging
-from flask import Flask, g
+from flask import Flask, g, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from app.filters import utc_timestamp_to_shanghai_datetime
@@ -21,8 +21,13 @@ def load_user(user_id):
     return user
 
 
-app.add_template_filter(utc_timestamp_to_shanghai_datetime)
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    flash("请先登录以访问该页面")
+    return redirect(url_for("login"))
 
+
+app.add_template_filter(utc_timestamp_to_shanghai_datetime)
 
 from app import routes, errors  # noqa
 
