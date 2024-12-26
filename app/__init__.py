@@ -24,7 +24,7 @@ def load_user(user_id):
 app.add_template_filter(utc_timestamp_to_shanghai_datetime)
 
 
-from app import routes, errors, commands  # noqa
+from app import routes, errors  # noqa
 
 
 @app.before_request
