@@ -1,10 +1,13 @@
 services:
   web:
     build: .
+    image: flying-chicken:latest
     command: gunicorn -w 4 -b 0.0.0.0:5000 app:app
     ports:
       - "5000:5000"
     volumes:
-      - .:/app
+      - ./data:/app/instance/data.db
     environment:
       - SECRET_KEY=<your_secret_key>
+      - ADMIN_NAME=<your_admin_name>
+      - ADMIN_PASSWORD=<your_admin_password>

@@ -1,6 +1,6 @@
-# .dockerignore
 *.md
-.gitingore
 .git/
-docker-compose.yml
+.gitignore
 Dockerfile
+docker-compose.yml
+.dockerignore
