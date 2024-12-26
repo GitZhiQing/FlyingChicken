@@ -1,0 +1,76 @@
+{% extends 'base.html' %} {% block title %}
+<title>后台</title>
+{% endblock %} {% block content %}
+<div class="admin-container">
+  <nav>
+    <a href="/" target="_blank">首页</a>
+    <span>
+      欢迎，<strong>{{ username }}</strong>！ <a href="/logout">注销</a></span
+    >
+  </nav>
+  <div class="admin-form-container">
+    <h2>设置活动</h2>
+    <form action="{{ url_for('set_event') }}" method="post">
+      <label for="name">活动名称</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        value="{{ event.name }}"
+        required />
+      <label for="desc">活动描述</label>
+      <textarea id="desc" name="desc" placeholder="请输入活动描述" required>
+{{ event.desc }}</textarea
+      >
+      <label for="date">活动日期</label>
+      <input
+        type="date"
+        id="date"
+        name="date"
+        value="{{ event.date }}"
+        required />
+      <label for="location">活动地点</label>
+      <input
+        type="text"
+        id="location"
+        name="location"
+        placeholder="请输入活动地点"
+        value="{{ event.location }}"
+        required />
+      <button type="submit">设置活动</button>
+    </form>
+  </div>
+  <hr />
+  <h2>签到记录 | 共 {{ records|length }} 条</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>电话</th>
+        <th>签到时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+      <tr>
+        {% if record.name|length > 2 %}
+        <td>{{ record.name[0] }}*{{ record.name[-1] }}</td>
+        {% else %}
+        <td>{{ record.name[0] }}*</td>
+        {% endif %}
+        <td>{{ record.phone[:3] }}****{{ record.phone[-4:] }}</td>
+        <td>{{ record.check_in_time|utc_timestamp_to_shanghai_datetime }}</td>
+        <td>
+          <a
+            href="{{ url_for('delete_record', record_id=record.id) }}"
+            class="delete"
+            >删除</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

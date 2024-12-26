@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block title %}
+<title>404 Not Found</title>
+{% endblock %} {% block content %}
+<div class="error-container">
+  <h1>404 Not Found</h1>
+  <p>请求的资源不存在，请检查请求的 URL 是否正确</p>
+  <a href="{{ url_for('index') }}">返回首页</a>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block title %}
+<title>400 Bad Request</title>
+{% endblock %} {% block content %}
+<div class="error-container">
+  <h1>400 Bad Request</h1>
+  <p>请求无效，请检查请求是否正确</p>
+  <a href="{{ url_for('index') }}">返回首页</a>
+</div>
+{% endblock %}

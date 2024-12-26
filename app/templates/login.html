@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block title %}
+<title>登录</title>
+{% endblock %} {% block content %}
+<div class="container">
+  <h2>后台登录</h2>
+  <div class="form-container">
+    <form action="{{ url_for('login') }}" method="post">
+      <label for="username">用户名</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="请输入用户名"
+        required />
+      <label for="password">密码</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="请输入密码"
+        required />
+      <button type="submit">登录</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

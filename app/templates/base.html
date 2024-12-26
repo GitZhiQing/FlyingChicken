@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block title %}
+    <title>签到</title>
+    {% endblock %}
+    <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+      type="text/css" />
+  </head>
+  <body>
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %} {% block content %}{% endblock %}
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+  </body>
+</html>
