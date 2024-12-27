@@ -23,7 +23,7 @@ class Records(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     phone = db.Column(db.String(11), nullable=False)
-    check_in_time = db.Column(db.Integer, default=int(time.time()))
+    check_in_time = db.Column(db.Integer, default=lambda: int(time.time()))
 
 
 class Event(db.Model):
