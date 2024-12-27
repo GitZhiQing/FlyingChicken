@@ -1,6 +1,7 @@
 import os
 import logging
 from flask import Flask, g, redirect, url_for, flash
+from sqlalchemy import text
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from app.filters import utc_timestamp_to_shanghai_datetime
@@ -33,21 +34,24 @@ from app import routes, errors  # noqa
 
 
 @app.before_request
-def initialize_database():
-    """初始化数据库"""
-    if not hasattr(g, "db_initialized"):
-        from app.models import Admins
+def initialize():
+    """初始化数据库和设置 WAL 模式"""
+    with app.app_context():
+        with db.engine.connect() as connection:
+            connection.execute(text("PRAGMA journal_mode=WAL"))
+        if not hasattr(g, "db_initialized"):
+            from app.models import Admins
 
-        if not os.path.exists(os.path.join(app.instance_path, "data.db")):
-            db.create_all()
-            admin_name = os.getenv("ADMIN_NAME")
-            admin_password = os.getenv("ADMIN_PASSWORD")
-            if admin_name and admin_password:
-                admin_user = Admins(username=admin_name)
-                admin_user.set_password_hash(admin_password)
-                db.session.add(admin_user)
-                db.session.commit()
-                logging.info("管理员账户创建完成.")
-            else:
-                logging.warning("未设置管理员账户.")
-        g.db_initialized = True
+            if not os.path.exists(os.path.join(app.instance_path, "data.db")):
+                db.create_all()
+                admin_name = os.getenv("ADMIN_NAME")
+                admin_password = os.getenv("ADMIN_PASSWORD")
+                if admin_name and admin_password:
+                    admin_user = Admins(username=admin_name)
+                    admin_user.set_password_hash(admin_password)
+                    db.session.add(admin_user)
+                    db.session.commit()
+                    logging.info("管理员账户创建完成.")
+                else:
+                    logging.warning("未设置管理员账户.")
+            g.db_initialized = True
