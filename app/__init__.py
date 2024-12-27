@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import logging
 from flask import Flask, g, redirect, url_for, flash
@@ -31,6 +32,11 @@ def unauthorized_callback():
 app.add_template_filter(utc_timestamp_to_shanghai_datetime)
 
 from app import routes, errors  # noqa
+
+
+@app.context_processor
+def inject_now():
+    return {"current_year": datetime.now().year}
 
 
 @app.before_request

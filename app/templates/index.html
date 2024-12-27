@@ -2,7 +2,13 @@
 <title>签到</title>
 {% endblock %} {% block content %}
 <div class="container">
-  <h2>活动签到</h2>
+  <div class="header">
+    <img
+      src="{{url_for('static', filename='favicon.svg')}}"
+      alt="logo"
+      class="logo" />
+    <h2>活动签到</h2>
+  </div>
   <div class="event-info">
     <p>活动：{{ event.name }}</p>
     <p>时间：{{ event.date }}</p>

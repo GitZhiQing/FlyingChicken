@@ -9,7 +9,10 @@
     >
   </nav>
   <div class="admin-form-container">
-    <h2>设置活动</h2>
+    <div class="header">
+      <img src="{{ url_for('static', filename='event.svg') }}" alt="event" />
+      <h2>设置活动</h2>
+    </div>
     <form action="{{ url_for('set_event') }}" method="post">
       <label for="name">活动名称</label>
       <input
@@ -22,26 +25,35 @@
       <textarea id="desc" name="desc" placeholder="请输入活动描述" required>
 {{ event.desc }}</textarea
       >
-      <label for="date">活动日期</label>
-      <input
-        type="date"
-        id="date"
-        name="date"
-        value="{{ event.date }}"
-        required />
-      <label for="location">活动地点</label>
-      <input
-        type="text"
-        id="location"
-        name="location"
-        placeholder="请输入活动地点"
-        value="{{ event.location }}"
-        required />
+      <div class="form-group">
+        <div>
+          <label for="date">活动日期</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            value="{{ event.date }}"
+            required />
+        </div>
+        <div>
+          <label for="location">活动地点</label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            placeholder="请输入活动地点"
+            value="{{ event.location }}"
+            required />
+        </div>
+      </div>
       <button type="submit">设置活动</button>
     </form>
   </div>
   <hr />
-  <h2>签到记录 | 共 {{ records|length }} 条</h2>
+  <div class="header">
+    <img src="{{ url_for('static', filename='table.svg') }}" alt="table" />
+    <h2>签到记录 | 共 {{ records|length }} 条</h2>
+  </div>
   <table>
     <thead>
       <tr>
